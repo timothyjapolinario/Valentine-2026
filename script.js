@@ -4,6 +4,7 @@ const message = document.getElementById("message");
 const rowCounts = [4, 3, 3];
 const rows = rowCounts.length;
 const maxCols = Math.max(...rowCounts);
+const TILE = 180;
 let tiles = [];
 // index where we want the empty slot to end up after shuffling
 let initialEmptyIndex = -1;
@@ -88,8 +89,8 @@ function createPuzzle() {
       if (idx === emptyStartIndex) {
         tile.classList.add("empty");
       } else {
-        const x = c * -100;
-        const y = r * -100;
+        const x = c * -TILE;
+        const y = r * -TILE;
         tile.style.backgroundPosition = `${x}px ${y}px`;
         tile.dataset.correct = idx;
       }
@@ -106,15 +107,15 @@ function createPuzzle() {
 
   // size the puzzle container and tile backgrounds to match the irregular grid
   const totalCols = maxCols;
-  puzzle.style.width = `${totalCols * 100}px`;
-  puzzle.style.height = `${rows * 100}px`;
+  puzzle.style.width = `${totalCols * TILE}px`;
+  puzzle.style.height = `${rows * TILE}px`;
   puzzle.style.gridTemplateColumns = `repeat(${totalCols}, 1fr)`;
   tiles.forEach((t) => {
-    if (!t.classList.contains("empty"))
-      t.style.backgroundSize = `${totalCols * 100}px ${rows * 100}px`;
+    t.style.backgroundSize = `${totalCols * TILE}px ${rows * TILE}px`;
+    if (t.classList.contains("empty")) t.style.backgroundImage = "none";
   });
 
-  shuffleTiles();
+  //shuffleTiles();
   tiles.forEach((tile) => puzzle.appendChild(tile));
   // highlight the preferred empty cell position
   updateEmptyHighlight();
@@ -236,9 +237,13 @@ function checkWin() {
   });
 
   if (solved) {
-    message.textContent = "You solved it! Will you be my Valentine? 💖";
+    message.textContent =
+      "I love you Bbiko. Will you always be my Valentine? 💖";
     // remove blur to reveal the complete image
     puzzle.classList.remove("blurred");
+    // open the envelope (add .open to wrapper)
+    const wrapper = document.querySelector(".wrapper");
+    if (wrapper) wrapper.classList.add("open");
   }
 }
 

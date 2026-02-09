@@ -10,6 +10,7 @@ h1 {
 
 #puzzle {
   margin: 20px auto;
+  margin-right: 40px;
   display: grid;
   gap: 4px;
 }
@@ -36,10 +37,10 @@ h1 {
 }
 
 .tile {
-  width: 100px;
-  height: 100px;
+  width: 180px;
+  height: 180px;
   background-image: url("image.jpg");
-  background-size: 300px 300px;
+  background-size: 720px 540px;
   border-radius: 12px;
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -64,4 +65,112 @@ h1 {
   font-size: 1.4rem;
   color: #a4133c;
   margin-top: 15px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  background-color: #3b4049;
+}
+
+.wrapper {
+  height: 320px;
+  width: 480px;
+  background-color: #3760c9;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  z-index: 0;
+}
+
+.lid {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  border-right: 240px solid transparent;
+  border-bottom: 160px solid transparent;
+  border-left: 240px solid transparent;
+  transform-origin: top;
+  transition: transform 0.25s linear;
+}
+
+/* Lid when closed */
+.lid.one {
+  border-top: 160px solid #658ced;
+  transform: rotateX(0deg);
+  z-index: 3;
+  transition-delay: 0.75s;
+}
+
+/* Lid when opened */
+.lid.two {
+  border-top: 160px solid #3760c9;
+  transform: rotateX(90deg);
+  z-index: 1;
+  transition-delay: 0.5s;
+}
+
+.envelope {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  border-top: 160px solid transparent;
+  border-right: 240px solid #c4dff0;
+  border-bottom: 160px solid #c4dff0;
+  border-left: 240px solid #a4d4f2;
+  z-index: 3;
+}
+
+.letter {
+  position: absolute;
+  top: 0;
+  width: 80%;
+  height: 80%;
+  background-color: white;
+  border-radius: 15px;
+  z-index: 2;
+  transition: 0.5s;
+}
+
+.letter p {
+  text-align: center;
+  font-size: 30px;
+  margin-top: 30px;
+  color: #3b4049;
+}
+
+.wrapper.open .lid.one {
+  transform: rotateX(90deg);
+  transition-delay: 0s;
+}
+
+.wrapper.open .lid.two {
+  transform: rotateX(180deg);
+  transition-delay: 0.25s;
+}
+
+.wrapper.open .letter {
+  transform: translateY(-50px);
+  transition-delay: 0.5s;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
 }
