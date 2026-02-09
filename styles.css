@@ -170,7 +170,14 @@ body {
 
 body {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-items: center;
+  padding: 50px;
 }
+
+/* @media (max-width: 767px) {
+  body {
+    flex-direction: column;
+  }
+} */

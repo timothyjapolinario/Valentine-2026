@@ -115,7 +115,7 @@ function createPuzzle() {
     if (t.classList.contains("empty")) t.style.backgroundImage = "none";
   });
 
-  //shuffleTiles();
+  shuffleTiles();
   tiles.forEach((tile) => puzzle.appendChild(tile));
   // highlight the preferred empty cell position
   updateEmptyHighlight();
