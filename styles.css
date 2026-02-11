@@ -13,6 +13,7 @@ h1 {
   margin-right: 40px;
   display: grid;
   gap: 4px;
+  grid-template-columns: repeat(4, 180px);
 }
 
 #puzzle {
@@ -39,7 +40,7 @@ h1 {
 .tile {
   width: 180px;
   height: 180px;
-  background-image: url("image.jpg");
+  background-image: url("image-2.png");
   background-size: 720px 540px;
   border-radius: 12px;
   cursor: pointer;
@@ -163,6 +164,84 @@ body {
 .wrapper.open .letter {
   transform: translateY(-50px);
   transition-delay: 0.5s;
+}
+
+/* Flowers animation that plays when the envelope opens */
+.flowers {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  height: 140px;
+  pointer-events: none;
+  z-index: 5;
+}
+.flowers .flower {
+  --delay: 0ms;
+  position: absolute;
+  bottom: 8px;
+  font-size: 30px;
+  opacity: 0;
+  transform: translateY(20px) scale(0.6) rotate(-8deg);
+  will-change: transform, opacity;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transform-origin: center bottom;
+}
+.wrapper.open .flowers .flower {
+  animation:
+    pop 600ms var(--delay) cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
+    float 3000ms ease-in-out calc(var(--delay) + 600ms) infinite;
+}
+.flowers .flower:nth-child(1) {
+  left: 8%;
+  --delay: 0ms;
+}
+.flowers .flower:nth-child(2) {
+  left: 22%;
+  --delay: 120ms;
+}
+.flowers .flower:nth-child(3) {
+  left: 36%;
+  --delay: 240ms;
+}
+.flowers .flower:nth-child(4) {
+  left: 54%;
+  --delay: 80ms;
+}
+.flowers .flower:nth-child(5) {
+  left: 70%;
+  --delay: 180ms;
+}
+.flowers .flower:nth-child(6) {
+  left: 86%;
+  --delay: 300ms;
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.6) rotate(-10deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-36px) scale(1.05) rotate(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-40px) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(-40px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-56px) rotate(6deg);
+  }
+  100% {
+    transform: translateY(-40px) rotate(0deg);
+  }
 }
 
 body {

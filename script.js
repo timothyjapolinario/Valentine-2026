@@ -81,6 +81,8 @@ function createPuzzle() {
   initialEmptyIndex = emptyStartIndex;
 
   let idx = 0;
+  // track the highest column index that actually contains image tiles
+  let maxImageCol = -1;
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < rowCounts[r]; c++) {
       const tile = document.createElement("div");
@@ -88,11 +90,14 @@ function createPuzzle() {
 
       if (idx === emptyStartIndex) {
         tile.classList.add("empty");
+        // explicitly remove background for empty cell
+        tile.style.backgroundImage = "none";
       } else {
         const x = c * -TILE;
         const y = r * -TILE;
         tile.style.backgroundPosition = `${x}px ${y}px`;
         tile.dataset.correct = idx;
+        maxImageCol = Math.max(maxImageCol, c);
       }
 
       // place tile using CSS grid coordinates
@@ -107,15 +112,19 @@ function createPuzzle() {
 
   // size the puzzle container and tile backgrounds to match the irregular grid
   const totalCols = maxCols;
+  // determine how many columns actually contain image tiles (e.g. 3)
+  const usedImageCols = maxImageCol === -1 ? totalCols : maxImageCol + 1;
   puzzle.style.width = `${totalCols * TILE}px`;
   puzzle.style.height = `${rows * TILE}px`;
-  puzzle.style.gridTemplateColumns = `repeat(${totalCols}, 1fr)`;
   tiles.forEach((t) => {
-    t.style.backgroundSize = `${totalCols * TILE}px ${rows * TILE}px`;
-    if (t.classList.contains("empty")) t.style.backgroundImage = "none";
+    if (t.classList.contains("empty")) {
+      t.style.backgroundImage = "none";
+    } else {
+      t.style.backgroundSize = `${usedImageCols * TILE}px ${rows * TILE}px`;
+    }
   });
 
-  shuffleTiles();
+  //shuffleTiles();
   tiles.forEach((tile) => puzzle.appendChild(tile));
   // highlight the preferred empty cell position
   updateEmptyHighlight();
@@ -238,7 +247,7 @@ function checkWin() {
 
   if (solved) {
     message.textContent =
-      "I love you Bbiko. Will you always be my Valentine? 💖";
+      "Flowers for you my sweetie pie. I love you! mwa mwa mwa 💖";
     // remove blur to reveal the complete image
     puzzle.classList.remove("blurred");
     // open the envelope (add .open to wrapper)
